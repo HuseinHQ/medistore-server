@@ -15,6 +15,12 @@ module.exports = {
       price: {
         type: Sequelize.INTEGER,
       },
+      imgUrl: {
+        type: Sequelize.STRING,
+      },
+      description: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),

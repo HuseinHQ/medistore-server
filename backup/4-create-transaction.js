@@ -2,35 +2,32 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('TransactionDetails', {
+    await queryInterface.createTable('Transactions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      TransactionId: {
+      UserId: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'Transactions',
+          model: 'Users',
           key: 'id',
         },
       },
-      ItemId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Items',
-          key: 'id',
-        },
+      status: {
+        type: Sequelize.STRING,
+        defaultValue: 'pending',
       },
-      quantity: {
+      total: {
         type: Sequelize.INTEGER,
       },
-      price: {
-        type: Sequelize.INTEGER,
+      snapToken: {
+        type: Sequelize.STRING,
       },
-      totalPrice: {
-        type: Sequelize.INTEGER,
+      snapUrl: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         type: Sequelize.DATE,
@@ -43,6 +40,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('TransactionDetails');
+    await queryInterface.dropTable('Transactions');
   },
 };

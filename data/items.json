@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Paracetamol 500 Mg Strip 10 Kaplet - Pereda Nyeri dan Demam",
+    "price": 1700,
+    "imgUrl": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2024/9/12/3a0644de-6298-4321-83d0-2e6b478d08d2.png.webp?ect=4g",
+    "description": "Paracetamol merupakan obat analgesik dan antipiretik yang efektif untum membantu meringankan rasa nyeri / sakit dan meunrunkan demam. Obat ini di indikasikan untuk membantu meringankan sakit pada keadaan sakit kepala, sakit gigi dan menurunkan demam."
+  },
+  {
+    "name": "Ibuprofen 400 Mg Strip 10 Kaplet - Pereda Nyeri dan Peradangan",
+    "price": 2500,
+    "imgUrl": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2024/9/12/ibuprofen.png.webp",
+    "description": "Ibuprofen adalah obat antiinflamasi nonsteroid (NSAID) yang membantu mengurangi rasa nyeri, peradangan, dan demam. Digunakan untuk sakit gigi, sakit kepala, dan nyeri otot."
+  },
+  {
+    "name": "Vitamin C 1000 Mg Strip 10 Kaplet - Suplemen Daya Tahan Tubuh",
+    "price": 5000,
+    "imgUrl": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2024/9/12/vitamin_c.png.webp",
+    "description": "Vitamin C 1000 Mg membantu menjaga daya tahan tubuh dan mempercepat pemulihan dari flu dan infeksi. Suplemen ini juga mendukung produksi kolagen untuk kulit sehat."
+  },
+  {
+    "name": "Amoxicillin 500 Mg Strip 10 Kaplet - Antibiotik Infeksi Bakteri",
+    "price": 3200,
+    "imgUrl": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2024/9/12/amoxicillin.png.webp",
+    "description": "Amoxicillin adalah antibiotik untuk mengobati berbagai infeksi bakteri seperti infeksi telinga, sinus, tenggorokan, paru-paru, dan kulit."
+  },
+  {
+    "name": "Loperamide 2 Mg Strip 10 Kaplet - Obat Diare Akut",
+    "price": 1500,
+    "imgUrl": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2024/9/12/loperamide.png.webp",
+    "description": "Loperamide digunakan untuk mengatasi diare akut dan mengurangi frekuensi buang air besar serta memperbaiki konsistensi tinja."
+  },
+  {
+    "name": "Cetirizine 10 Mg Strip 10 Kaplet - Obat Alergi",
+    "price": 2000,
+    "imgUrl": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2024/9/12/cetirizine.png.webp",
+    "description": "Cetirizine adalah antihistamin yang digunakan untuk mengatasi gejala alergi seperti gatal, bersin, hidung tersumbat, dan mata berair."
+  },
+  {
+    "name": "Ranitidine 150 Mg Strip 10 Kaplet - Obat Maag dan Asam Lambung",
+    "price": 1800,
+    "imgUrl": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2024/9/12/ranitidine.png.webp",
+    "description": "Ranitidine digunakan untuk mengobati masalah lambung seperti tukak lambung, refluks asam, dan mencegah peningkatan produksi asam lambung."
+  },
+  {
+    "name": "Aspirin 100 Mg Strip 10 Kaplet - Pencegah Penggumpalan Darah",
+    "price": 2200,
+    "imgUrl": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2024/9/12/aspirin.png.webp",
+    "description": "Aspirin berfungsi sebagai antikoagulan yang digunakan untuk mencegah penggumpalan darah, serta mengurangi rasa nyeri dan peradangan."
+  },
+  {
+    "name": "Dextromethorphan 15 Mg Strip 10 Kaplet - Obat Batuk Kering",
+    "price": 1200,
+    "imgUrl": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2024/9/12/dextromethorphan.png.webp",
+    "description": "Dextromethorphan adalah obat antitusif yang digunakan untuk mengatasi batuk kering tanpa dahak, terutama yang disebabkan oleh iritasi tenggorokan."
+  },
+  {
+    "name": "Omeprazole 20 Mg Strip 10 Kaplet - Obat Asam Lambung dan Refluks",
+    "price": 2800,
+    "imgUrl": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2024/9/12/omeprazole.png.webp",
+    "description": "Omeprazole adalah obat penghambat pompa proton yang efektif dalam mengurangi produksi asam lambung dan mengobati gejala refluks asam."
+  },
+  {
+    "name": "Loratadine 10 Mg Strip 10 Kaplet - Obat Alergi Non-Sedatif",
+    "price": 1900,
+    "imgUrl": "https://images.tokopedia.net/img/cache/500-square/VqbcmM/2024/9/12/loratadine.png.webp",
+    "description": "Loratadine adalah antihistamin yang tidak menyebabkan kantuk, digunakan untuk mengobati gejala alergi seperti gatal, bersin, dan ruam."
+  }
+]

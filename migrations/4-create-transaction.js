@@ -16,6 +16,21 @@ module.exports = {
           key: 'id',
         },
       },
+      orderId: {
+        type: Sequelize.STRING,
+      },
+      status: {
+        type: Sequelize.STRING,
+      },
+      total: {
+        type: Sequelize.INTEGER,
+      },
+      snapToken: {
+        type: Sequelize.STRING,
+      },
+      snapUrl: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
