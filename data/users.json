@@ -1,7 +1,9 @@
 [
   {
-    "name": "Husein",
-    "email": "husein@gmail.com",
-    "password": "12345"
+    "email": "mhusein463@gmail.com",
+    "password": "12345",
+    "phoneNumber": "08123456789",
+    "firstName": "Muhammad Husein",
+    "lastName": "Al Hakim"
   }
 ]

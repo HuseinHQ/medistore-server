@@ -1,7 +1,8 @@
 const snap = require('../config/midtrans');
-const { Cart, Transaction, TransactionDetail, sequelize } = require('../models');
+const { Cart, Transaction, TransactionDetail, sequelize, User } = require('../models');
 const { v4: uuidv4 } = require('uuid');
 const MAX_MIDTRANS_NAME_LENGTH = 50;
+const moment = require('moment-timezone');
 
 class TransactionController {
   static truncateName = (name) => {
@@ -20,11 +21,16 @@ class TransactionController {
         throw { name: 'CartEmpty' };
       }
 
+      const findUser = await User.findByPk(id);
+
       let grandTotal = 0;
       let transaction;
 
       await sequelize.transaction(async (t) => {
-        transaction = await Transaction.create({ UserId: id, orderId: uuidv4() }, { transaction: t });
+        transaction = await Transaction.create(
+          { UserId: id, orderId: uuidv4(), status: 'pending' },
+          { transaction: t }
+        );
         const mappedCart = carts.map((cart) => {
           const totalPrice = cart.quantity * cart.Item.price;
           grandTotal += totalPrice;
@@ -56,8 +62,14 @@ class TransactionController {
             secure: true,
           },
           item_details: midtransFormattedCarts,
+          customer_details: {
+            first_name: findUser.firstName,
+            last_name: findUser.lastName,
+            email: findUser.email,
+            phone: findUser.phoneNumber,
+          },
           expiry: {
-            start_time: new Date().toISOString(),
+            start_time: moment().tz('Asia/Jakarta').format('YYYY-MM-DD HH:mm:ss Z'),
             unit: 'days',
             duration: 1,
           },
@@ -96,13 +108,29 @@ class TransactionController {
         currency,
       } = req.body;
 
-      const transaction = await Transaction.findByPk(order_id);
+      const transaction = await Transaction.findOne({ where: { orderId: order_id } });
       if (!transaction) {
         throw { name: 'TransactionNotFound' };
       }
 
-      // Klo sudah kebayar itu statusnya capture
-      await transaction.update({ status: transaction_status });
+      if (transaction_status == 'capture') {
+        if (fraud_status == 'challenge') {
+          await transaction.update({ status: 'challenge' });
+        } else if (fraud_status == 'accept') {
+          await transaction.update({ status: 'success' });
+        }
+      } else if (transaction_status == 'settlement') {
+        await transaction.update({ status: 'success' });
+      } else if (transaction_status == 'deny') {
+        // TODO you can ignore 'deny', because most of the time it allows payment retries
+        // and later can become success
+      } else if (transaction_status == 'cancel' || transaction_status == 'expire') {
+        await transaction.update({ status: 'failure' });
+      } else if (transaction_status == 'pending') {
+        await transaction.update({ status: 'pending' });
+      }
+
+      res.status(200).json({ message: 'Notification received' });
     } catch (error) {
       console.log('----- /controllers/TransactionController.js -----', error);
       next(error);

@@ -24,8 +24,66 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      name: DataTypes.STRING,
-      password: DataTypes.STRING,
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: {
+            args: [6],
+            msg: 'Password must be at least 6 characters',
+          },
+          notEmpty: {
+            args: true,
+            msg: 'Password is required',
+          },
+          notNull: {
+            args: true,
+            msg: 'Password is required',
+          },
+        },
+      },
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: 'First name is required',
+          },
+          notNull: {
+            args: true,
+            msg: 'First name is required',
+          },
+        },
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: 'Last name is required',
+          },
+          notNull: {
+            args: true,
+            msg: 'Last name is required',
+          },
+        },
+      },
+      phoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notEmpty: {
+            args: true,
+            msg: 'Phone number is required',
+          },
+          notNull: {
+            args: true,
+            msg: 'Phone number is required',
+          },
+        },
+      },
     },
     {
       sequelize,
