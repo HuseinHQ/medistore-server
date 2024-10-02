@@ -22,6 +22,20 @@ class ItemController {
       next(error);
     }
   }
+
+  static async getItemById(req, res, next) {
+    try {
+      const { itemId } = req.params;
+      const item = await Item.findByPk(itemId);
+
+      if (!item) throw { name: 'ItemNotFound' };
+
+      res.status(200).json({ data: item });
+    } catch (error) {
+      console.log('----- /controllers/ItemController.js -----', error);
+      next(error);
+    }
+  }
 }
 
 module.exports = ItemController;

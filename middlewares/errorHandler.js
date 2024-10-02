@@ -42,6 +42,10 @@ function errorHandler(err, req, res, next) {
       status = 404;
       message = 'Transaction not found';
       break;
+    case 'ItemNotFound':
+      status = 404;
+      message = err.message || 'Item not found';
+      break;
     default:
       status = 500;
       message = err.message;
