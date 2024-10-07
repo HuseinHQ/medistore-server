@@ -6,8 +6,8 @@ const authentication = require('../middlewares/authentication');
 cartRouter.use(authentication);
 cartRouter.get('/', CartController.getCarts);
 cartRouter.post('/:item_id', CartController.addToCart);
-cartRouter.patch('/:item_id/increase', CartController.increaseQuantity);
-cartRouter.patch('/:item_id/decrease', CartController.decreaseQuantity);
-cartRouter.delete('/:item_id', CartController.removeFromCart);
+cartRouter.patch('/:cart_id/increase', CartController.increaseQuantity);
+cartRouter.patch('/:cart_id/decrease', CartController.decreaseQuantity);
+cartRouter.delete('/:cart_id', CartController.removeFromCart);
 
 module.exports = cartRouter;

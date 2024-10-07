@@ -1,8 +1,11 @@
 const snap = require('../config/midtrans');
-const { Cart, Transaction, TransactionDetail, sequelize, User } = require('../models');
+const { Cart, Transaction, TransactionDetail, sequelize, User, Item } = require('../models');
 const { v4: uuidv4 } = require('uuid');
 const MAX_MIDTRANS_NAME_LENGTH = 50;
 const moment = require('moment-timezone');
+const PDFDocument = require('pdfkit');
+const fs = require('fs');
+const generateInvoice = require('../helpers/generateInvoice');
 
 class TransactionController {
   static truncateName = (name) => {
@@ -11,6 +14,33 @@ class TransactionController {
     }
     return name;
   };
+
+  static async getTransactions(req, res, next) {
+    try {
+      const { id } = req.user;
+      const { status } = req.query;
+
+      const where = { UserId: id };
+      if (status && status !== 'all') {
+        where.status = status;
+      }
+
+      const transactions = await Transaction.findAll({
+        where,
+        include: {
+          model: TransactionDetail,
+          include: Item,
+        },
+
+        order: [['createdAt', 'DESC']],
+      });
+
+      res.status(200).json({ message: 'Transactions found', data: transactions });
+    } catch (error) {
+      console.log('----- /controllers/TransactionController.js (getTransactions) -----', error);
+      next(error);
+    }
+  }
 
   static async createTransaction(req, res, next) {
     try {
@@ -85,7 +115,7 @@ class TransactionController {
 
       res.status(200).json({ message: 'Transaction created successfully', data: transaction });
     } catch (error) {
-      console.log('----- /controllers/TransactionController.js -----', error);
+      console.log('----- /controllers/TransactionController.js (createTransaction) -----', error);
       next(error);
     }
   }
@@ -132,7 +162,7 @@ class TransactionController {
 
       res.status(200).json({ message: 'Notification received' });
     } catch (error) {
-      console.log('----- /controllers/TransactionController.js -----', error);
+      console.log('----- /controllers/TransactionController.js (notificationHandler) -----', error);
       next(error);
     }
   }
@@ -157,7 +187,31 @@ class TransactionController {
 
       res.status(200).json({ message: 'Transaction found', data: transaction });
     } catch (error) {
-      console.log('----- /controllers/TransactionController.js -----', error);
+      console.log('----- /controllers/TransactionController.js (getTransactionById) -----', error);
+      next(error);
+    }
+  }
+
+  static async getInvoice(req, res, next) {
+    try {
+      const { id } = req.params;
+
+      const transactions = await Transaction.findByPk(id, {
+        include: {
+          model: TransactionDetail,
+          include: Item,
+        },
+      });
+
+      if (!transactions) {
+        throw { name: 'TransactionNotFound' };
+      }
+
+      const pdfPath = generateInvoice(transactions);
+
+      res.status(200).json({ message: 'PDF generated', data: { pdfPath } });
+    } catch (error) {
+      console.log('----- /controllers/TransactionController.js (getInvoice) -----', error);
       next(error);
     }
   }

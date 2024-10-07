@@ -5,7 +5,7 @@ class CartController {
     try {
       const { id } = req.user;
 
-      const carts = await Cart.findAll({ where: { UserId: id }, include: Item });
+      const carts = await Cart.findAll({ where: { UserId: id }, include: Item, order: [['createdAt', 'DESC']] });
       const mappedCarts = carts.map((cart) => ({
         cartId: cart.id,
         itemId: cart.Item.id,
@@ -17,7 +17,7 @@ class CartController {
 
       res.status(200).json({ data: mappedCarts });
     } catch (error) {
-      console.log('----- /controllers/CartController.js -----', error);
+      console.log('----- /controllers/CartController.js (getCarts) -----', error);
       next(error);
     }
   }
@@ -41,62 +41,59 @@ class CartController {
 
       res.status(201).json({ message: 'Item added to cart successfully' });
     } catch (error) {
-      console.log('----- /controllers/CartController.js -----', error);
-      next(error);
+      console.log('----- /controllers/CartController.js (addToCart) -----', error);
     }
   }
 
   static async increaseQuantity(req, res, next) {
     try {
-      const { item_id } = req.params;
-      const { id } = req.user;
+      const { cart_id } = req.params;
 
-      const CartItem = await Cart.findOne({ where: { ItemId: item_id, UserId: id } });
+      const CartItem = await Cart.findByPk(cart_id);
       if (!CartItem) throw { name: 'NotFoundError', message: 'Item not found' };
 
       const newQuantity = CartItem.quantity + 1;
-      await Cart.update({ quantity: newQuantity }, { where: { ItemId: item_id, UserId: id } });
+      await CartItem.update({ quantity: newQuantity });
 
       res.status(200).json({ message: 'Item quantity increased successfully' });
     } catch (error) {
-      console.log('----- /controllers/CartController.js -----', error);
+      console.log('----- /controllers/CartController.js (increaseQuantity) -----', error);
       next(error);
     }
   }
 
   static async decreaseQuantity(req, res, next) {
     try {
-      const { item_id } = req.params;
-      const { id } = req.user;
+      const { cart_id } = req.params;
 
-      const CartItem = await Cart.findOne({ where: { ItemId: item_id, UserId: id } });
+      const CartItem = await Cart.findByPk(cart_id);
       if (!CartItem) throw { name: 'NotFoundError', message: 'Item not found' };
 
       if (CartItem.quantity > 1) {
         const newQuantity = CartItem.quantity - 1;
-        await Cart.update({ quantity: newQuantity }, { where: { ItemId: item_id, UserId: id } });
+        await CartItem.update({ quantity: newQuantity });
       }
 
       res.status(200).json({ message: 'Item quantity decreased successfully' });
     } catch (error) {
-      console.log('----- /controllers/CartController.js -----', error);
+      console.log('----- /controllers/CartController.js (decreaseQuantity) -----', error);
       next(error);
     }
   }
 
   static async removeFromCart(req, res, next) {
     try {
-      const { item_id } = req.params;
+      const { cart_id } = req.params;
       const { id } = req.user;
 
-      const CartItem = await Cart.findOne({ where: { ItemId: item_id, UserId: id } });
+      const CartItem = await Cart.findByPk(cart_id);
       if (!CartItem) throw { name: 'NotFoundError', message: 'Item not found' };
 
-      await Cart.destroy({ where: { ItemId: item_id, UserId: id } });
+      await CartItem.destroy();
 
       res.status(200).json({ message: 'Item removed from cart successfully' });
     } catch (error) {
-      console.log('----- /controllers/CartController.js -----', error);
+      console.log('----- /controllers/CartController.js (removeFromCart) -----', error);
       next(error);
     }
   }
