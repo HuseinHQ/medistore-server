@@ -6,7 +6,16 @@ class CartController {
       const { id } = req.user;
 
       const carts = await Cart.findAll({ where: { UserId: id }, include: Item });
-      res.status(200).json({ data: carts });
+      const mappedCarts = carts.map((cart) => ({
+        cartId: cart.id,
+        itemId: cart.Item.id,
+        quantity: cart.quantity,
+        name: cart.Item.name,
+        price: cart.Item.price,
+        imgUrl: cart.Item.imgUrl,
+      }));
+
+      res.status(200).json({ data: mappedCarts });
     } catch (error) {
       console.log('----- /controllers/CartController.js -----', error);
       next(error);
