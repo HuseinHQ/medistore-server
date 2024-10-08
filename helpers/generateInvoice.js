@@ -33,24 +33,33 @@ const generateInvoice = (transactions) => {
     .moveDown();
 
   // Table Header
-  doc
-    .fontSize(12)
-    .text('Item', 50, doc.y, { width: 300 })
-    .text('Quantity', 200, doc.y)
-    .text('Price', 280, doc.y)
-    .text('Total', 350, doc.y)
-    .moveDown();
+  const headerY = doc.y; // Get the current y-coordinate for the item row
+
+  // Print the item name
+  doc.fontSize(12).text('Quantity', 50, headerY, { width: 150 });
+
+  // Print the other columns at the same y-coordinate
+  doc.text('Quantity', 200, headerY).text('Price', 280, headerY).text('Total', 350, headerY);
+  doc.moveDown();
 
   // Table Rows
   transactions.TransactionDetails.forEach((transaction) => {
     const itemY = doc.y; // Get the current y-coordinate for the item row
+
+    // Calculate the height of the item name text block
+    const itemNameHeight = doc.heightOfString(transaction.Item.name, { width: 150 });
+
+    // Print the item name
+    doc.fontSize(12).text(transaction.Item.name, 50, itemY, { width: 150 });
+
+    // Print the other columns at the same y-coordinate
     doc
-      .fontSize(12)
-      .text(transaction.Item.name, 50, itemY, { width: 150 })
       .text(transaction.quantity, 200, itemY)
       .text(`Rp ${transaction.Item.price.toLocaleString()}`, 280, itemY)
-      .text(`Rp ${transaction.totalPrice.toLocaleString()}`, 350, itemY)
-      .moveDown();
+      .text(`Rp ${transaction.totalPrice.toLocaleString()}`, 350, itemY);
+
+    // Move down by the height of the tallest text block
+    doc.moveDown(itemNameHeight / doc.currentLineHeight());
   });
 
   // Footer
